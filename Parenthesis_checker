@@ -1,0 +1,36 @@
+bool ispar(string x)
+    {
+        stack<char>s;
+        int i=0;
+        while(i<x.size()){
+            if(x[i]=='['||x[i]=='{'||x[i]=='('){
+                s.push(x[i]);
+            }
+            else{
+                if(!s.empty()){
+                    if(s.top()=='('&&x[i]==')'){
+                        s.pop();
+                    }
+                    else if(s.top()=='{'&&x[i]=='}'){
+                        s.pop();
+                    }
+                    else if(s.top()=='['&&x[i]==']'){
+                        s.pop();
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                else{
+                    return false;
+                }
+            }
+            i++;
+        }
+        if(s.empty()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
