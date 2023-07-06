@@ -29,3 +29,33 @@ int countRev (string s)
     int ans = (a+1)/2 + (b+1)/2;
     return ans;
 }
+
+//O(1)
+
+int countRev (string s)
+{
+    int countTotal = s.size();
+    if(countTotal%2!=0) return -1;
+    
+    int openBraces = 0;
+    int reversals = 0;
+
+    for (char c : s) {
+        if (c == '{') {
+            openBraces++;
+        } else {
+            if (openBraces == 0) {
+                // Need a reversal as there is no matching open brace
+                reversals++;
+                openBraces++;
+            } else {
+                openBraces--;
+            }
+        }
+        //cout<< c<<" "<<reversals<<" "<<openBraces<<endl;
+    }
+    // Remaining openBraces/2 need to be reversed
+    reversals += openBraces / 2;
+
+    return reversals;
+}
