@@ -1,0 +1,37 @@
+int solve(int sr, int sc, vector<vector<char>>&mat, vector<vector<int>>&vis, string target, int index, int n, int m){
+        int count=0;
+        if(sr<0||sr>=n||sc<0||sc>=m||mat[sr][sc]!=target[index]||vis[sr][sc])return 0;
+        if(index==target.size()-1)return 1;
+        vis[sr][sc]=1;
+        int nsr=sr-1,nsc=sc;
+        if(nsr>=0&&nsr<n&&nsc>=0&&nsc<m&&vis[nsr][nsc]==0&&mat[nsr][nsc]==target[index+1]){
+            count=count+solve(nsr,nsc,mat,vis,target,index+1,n,m);
+        }
+        nsr=sr,nsc=sc+1;
+        if(nsr>=0&&nsr<n&&nsc>=0&&nsc<m&&vis[nsr][nsc]==0&&mat[nsr][nsc]==target[index+1]){
+            count=count+solve(nsr,nsc,mat,vis,target,index+1,n,m);
+        }
+        nsr=sr+1,nsc=sc;
+        if(nsr>=0&&nsr<n&&nsc>=0&&nsc<m&&vis[nsr][nsc]==0&&mat[nsr][nsc]==target[index+1]){
+            count=count+solve(nsr,nsc,mat,vis,target,index+1,n,m);
+        }
+        nsr=sr, nsc=sc-1;
+        if(nsr>=0&&nsr<n&&nsc>=0&&nsc<m&&vis[nsr][nsc]==0&&mat[nsr][nsc]==target[index+1]){
+            count=count+solve(nsr,nsc,mat,vis,target,index+1,n,m);
+        }
+        vis[sr][sc]=0;
+        return count;
+    }
+    int findOccurrence(vector<vector<char> > &mat, string target){
+        int n=mat.size();
+        int m=mat[0].size();
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        int count=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(mat[i][j]==target[0])
+                    count=count+solve(i,j,mat,vis,target,0,n,m);
+            }
+        }
+        return count;
+    }
